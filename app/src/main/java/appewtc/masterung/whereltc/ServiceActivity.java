@@ -97,6 +97,10 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
 
     }   // Main Method
 
+    public void clickListView(View view) {
+        startActivity(new Intent(ServiceActivity.this, LTClistView.class));
+    }
+
     @Override
     protected void onActivityResult(int requestCode,
                                     int resultCode,
