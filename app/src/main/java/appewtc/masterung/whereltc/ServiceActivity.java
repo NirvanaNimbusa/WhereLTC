@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,6 +27,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.jibble.simpleftp.SimpleFTP;
+
+import java.io.File;
 
 public class ServiceActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -171,6 +176,14 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
                 pathImageString = uri.getPath();
             }
             Log.d("16decV2", "path ==> " + pathImageString);
+
+            SimpleFTP simpleFTP = new SimpleFTP();
+            simpleFTP.connect("ftp.lao-hosting.com", 21, "ltc@lao-hosting.com", "Abc12345");
+            simpleFTP.bin();
+            simpleFTP.cwd("Image");
+            simpleFTP.stor(new File(pathImageString));
+            simpleFTP.disconnect();
+            Toast.makeText(ServiceActivity.this, "Upload Image Finish", Toast.LENGTH_SHORT).show();
 
 
         } catch (Exception e) {
