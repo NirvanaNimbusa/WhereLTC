@@ -1,6 +1,7 @@
 package appewtc.masterung.whereltc;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Criteria;
@@ -9,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -36,7 +38,7 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
     private TextView textView;
     private EditText editText;
     private ImageView imageView, takePhotoImageView;
-    private String nameImageString;
+    private String nameImageString, pathImageString;
     private Uri uri;
     private boolean aBoolean = true;
 
@@ -142,9 +144,41 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
             myAlert.myDialog();
         } else {
             //Data OK
+            uploadImage();
         }
 
     }   // clickSave
+
+    private void uploadImage() {
+
+        try {
+
+            //Permission
+            StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy
+                    .Builder().permitAll().build();
+            StrictMode.setThreadPolicy(threadPolicy);
+
+            //Find Path of Image
+            String[] strings = new String[]{MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(uri, strings, null, null, null);
+            if (cursor != null) {
+
+                cursor.moveToFirst();
+                int i = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                pathImageString = cursor.getString(i);
+
+            } else {
+                pathImageString = uri.getPath();
+            }
+            Log.d("16decV2", "path ==> " + pathImageString);
+
+
+        } catch (Exception e) {
+            Log.d("16decV2", "e upload ==> " + e.toString());
+        }
+
+
+    }   // upload
 
     @Override
     protected void onResume() {
