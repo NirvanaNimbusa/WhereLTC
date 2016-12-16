@@ -3,7 +3,10 @@ package appewtc.masterung.whereltc;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +31,7 @@ public class LTClistView extends AppCompatActivity {
             Log.d("16decV3", "JSON ==> " + s);
 
             JSONArray jsonArray = new JSONArray(s);
-            String[] nameStrings = new String[jsonArray.length()];
+            final String[] nameStrings = new String[jsonArray.length()];
             String[] latStrings = new String[jsonArray.length()];
             String[] lngStrings = new String[jsonArray.length()];
             String[] iconStrings = new String[jsonArray.length()];
@@ -46,6 +49,13 @@ public class LTClistView extends AppCompatActivity {
             MyAdapter myAdapter = new MyAdapter(LTClistView.this,
                     nameStrings, latStrings, lngStrings, iconStrings);
             listView.setAdapter(myAdapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Toast.makeText(LTClistView.this, nameStrings[i], Toast.LENGTH_SHORT).show();
+                }
+            });
 
 
         } catch (Exception e) {
