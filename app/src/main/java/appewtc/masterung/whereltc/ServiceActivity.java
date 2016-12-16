@@ -162,6 +162,24 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
                 pathImageString.substring(pathImageString.lastIndexOf("/"));
         Log.d("16decV2", "urlImage ==> " + urlImageString);
 
+        try {
+
+            UpdateLTC updateLTC = new UpdateLTC(ServiceActivity.this,
+                    nameImageString, urlImageString,
+                    Double.toString(updateLatADouble),
+                    Double.toString(updateLngADouble));
+            updateLTC.execute();
+
+            if (Boolean.parseBoolean(updateLTC.get())) {
+                Toast.makeText(ServiceActivity.this, "Save OK", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(ServiceActivity.this, "Cannot Save Data", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void uploadImage() {
