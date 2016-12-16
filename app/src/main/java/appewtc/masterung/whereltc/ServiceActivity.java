@@ -43,7 +43,7 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
     private TextView textView;
     private EditText editText;
     private ImageView imageView, takePhotoImageView;
-    private String nameImageString, pathImageString;
+    private String nameImageString, pathImageString, urlImageString;
     private Uri uri;
     private boolean aBoolean = true;
 
@@ -150,10 +150,19 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
         } else {
             //Data OK
             uploadImage();
+            uploadString();
 
         }
 
     }   // clickSave
+
+    private void uploadString() {
+
+        urlImageString = "http://lao-hosting.com/ltc/Image" +
+                pathImageString.substring(pathImageString.lastIndexOf("/"));
+        Log.d("16decV2", "urlImage ==> " + urlImageString);
+
+    }
 
     private void uploadImage() {
 
