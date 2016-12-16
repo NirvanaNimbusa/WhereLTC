@@ -150,6 +150,7 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
         } else {
             //Data OK
             uploadImage();
+
         }
 
     }   // clickSave
